@@ -16,6 +16,9 @@ const mainTheme: DefaultTheme = {
       alertColor: "#e0435d",
     },
   },
+  paddings: {
+    layoutPadding: "0 32px",
+  },
 };
 
 export default mainTheme;

@@ -17,5 +17,8 @@ declare module "styled-components" {
         alertColor: string;
       };
     };
+    paddings: {
+      layoutPadding: string;
+    };
   }
 }
