@@ -3,17 +3,17 @@ import { DefaultTheme } from "styled-components";
 const mainTheme: DefaultTheme = {
   colors: {
     brands: {
-      baseColor: "##2daae1",
+      base: "#2daae1",
     },
     neutrals: {
-      darkColor: "#212529",
-      lightColor: "#fff",
-      baseColor: "##91a3b5",
+      dark: "#212529",
+      light: "#fff",
+      base: "#91a3b5",
     },
     feedback: {
-      successColor: "#2e0b2",
-      warningColor: "#e0d716",
-      alertColor: "#e0435d",
+      success: "#2e0b2",
+      warning: "#e0d716",
+      alert: "#e0435d",
     },
   },
   paddings: {
