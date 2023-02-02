@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
 import paths from "../utils/paths";
 import LoginPage from "../pages/LoginPage/LoginPage";
 
-const { basePath, loginPath } = paths;
+const { base: basePath, login: loginPath } = paths;
 
 const browserRouter = createBrowserRouter([
   {
