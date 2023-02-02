@@ -4,17 +4,17 @@ declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
       brands: {
-        baseColor: string;
+        base: string;
       };
       neutrals: {
-        darkColor: string;
-        lightColor: string;
-        baseColor: string;
+        dark: string;
+        light: string;
+        base: string;
       };
       feedback: {
-        successColor: string;
-        warningColor: string;
-        alertColor: string;
+        success: string;
+        warning: string;
+        alert: string;
       };
     };
     paddings: {
