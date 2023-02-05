@@ -11,8 +11,8 @@ html {
   font-family: "Open Sans", sans-serif;
 }
 
-body {
-  margin: 0 auto;
+.root {
+  font-size: 1.125rem;
 }
 
 ul,li {
@@ -25,12 +25,9 @@ ul,li {
 
 button {
   padding: 0;
-}
-
-
-button, a {
   cursor: pointer;
 }
+
 
 input,
 button,
@@ -39,14 +36,9 @@ select {
   font: inherit;
 }
 
+body,
 p,
-span,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+span {
   margin: 0;
 }
 
@@ -56,6 +48,7 @@ h3,
 h4,
 h5,
 h6 {
+  margin-top: 0;
   font-family: "Montserrat", sans-serif;
 }
 

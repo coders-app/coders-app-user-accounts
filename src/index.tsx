@@ -8,7 +8,7 @@ import GlobalStyle from "./styles/GlobalStyle";
 import mainTheme from "./styles/mainTheme";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.querySelector(".root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
