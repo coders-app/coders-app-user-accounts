@@ -1,11 +1,8 @@
 import styled from "styled-components";
 
 const LayoutStyled = styled.div`
-  padding: ${({
-    theme: {
-      paddings: { layoutPadding },
-    },
-  }) => layoutPadding};
+  margin: 0 auto;
+  max-width: 1200px;
 `;
 
 export default LayoutStyled;
