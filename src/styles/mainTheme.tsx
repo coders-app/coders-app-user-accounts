@@ -17,7 +17,7 @@ const mainTheme: DefaultTheme = {
     },
   },
   paddings: {
-    layoutPadding: "0 32px",
+    block: "32px",
   },
 };
 

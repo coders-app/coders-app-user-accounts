@@ -18,7 +18,7 @@ declare module "styled-components" {
       };
     };
     paddings: {
-      layoutPadding: string;
+      block: string;
     };
   }
 }
