@@ -22,6 +22,9 @@ const LoginForm = (): JSX.Element => {
     setCredentials(initialCredentials);
   };
 
+  const formIsValidate = (): boolean =>
+    credentials.email !== "" && credentials.password !== "";
+
   return (
     <LoginFormStyled noValidate autoComplete="off" onSubmit={handleOnSubmit}>
       <div className="form-group">
@@ -34,7 +37,7 @@ const LoginForm = (): JSX.Element => {
           type="email"
           onChange={handleChangeForm}
         ></input>
-        <span className="form-group__message">Tot bé</span>
+        <span className="form-group__message">Tot malament</span>
       </div>
       <div className="form-group">
         <label className="form-group__title" htmlFor="password">
@@ -50,7 +53,7 @@ const LoginForm = (): JSX.Element => {
         ></input>
         <span className="form-group__message">Tot malament</span>
       </div>
-      <button className="button" type="submit">
+      <button className="button" type="submit" disabled={!formIsValidate()}>
         Send
       </button>
     </LoginFormStyled>
