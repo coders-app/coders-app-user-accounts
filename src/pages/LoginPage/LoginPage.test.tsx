@@ -5,13 +5,13 @@ import LoginPage from "./LoginPage";
 describe("Given the page LoginPage", () => {
   describe("When it is rendered", () => {
     test("Then it should show a heading level 1 with 'Login' on the screen", () => {
-      const expectedHeading = {
+      const headingData = {
         level: 1,
         name: /login/i,
       };
 
       customRender(<LoginPage />);
-      const renderedHeading = screen.getByRole("heading", expectedHeading);
+      const renderedHeading = screen.getByRole("heading", headingData);
 
       expect(renderedHeading).toBeInTheDocument();
     });
@@ -23,16 +23,15 @@ describe("Given the page LoginPage", () => {
 
       customRender(<LoginPage />);
 
-      const resultEmailLabel: HTMLLabelElement =
-        screen.getByLabelText(emailLabel);
-      const resultPasswordLabel: HTMLLabelElement =
+      const inputEmail: HTMLInputElement = screen.getByLabelText(emailLabel);
+      const inputPassword: HTMLInputElement =
         screen.getByLabelText(passwordLabel);
       const resultButton: HTMLButtonElement = screen.getByRole("button", {
         name: buttonText,
       });
 
-      expect(resultEmailLabel).toBeInTheDocument();
-      expect(resultPasswordLabel).toBeInTheDocument();
+      expect(inputEmail).toBeInTheDocument();
+      expect(inputPassword).toBeInTheDocument();
       expect(resultButton).toBeInTheDocument();
     });
   });
