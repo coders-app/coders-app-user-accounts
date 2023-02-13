@@ -1,57 +1,63 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
+import customRender from "../../testUtils/customRender";
 import LoginForm from "./LoginForm";
 
 describe("Given a LoginForm", () => {
-  describe("When it's render", () => {
-    test("Then it should show a form with 'Introduce your Email', 'Introdue your Password' as placeholders", () => {
-      const expectedEmailPlaceholder = "Introduce your Email";
-      const expectedPasswordPlaceholder = "Introduce your Password";
+  const buttonText = /send/i;
+  const emailLabel = /email/i;
+  const passwordLabel = /password/i;
 
-      render(<LoginForm />, { wrapper: WrapperWithProviders });
+  describe("When it's rendered", () => {
+    test("Then it should show a text field with 'Email', 'Password", () => {
+      customRender(<LoginForm />);
 
-      const resulEmailPlaceholder = screen.getByPlaceholderText(
-        expectedEmailPlaceholder
-      );
-      const resultPasswordPlaceholder = screen.getByPlaceholderText(
-        expectedPasswordPlaceholder
-      );
+      const emailInput = screen.getByLabelText(emailLabel);
+      const passwordInput = screen.getByLabelText(passwordLabel);
 
-      expect(resulEmailPlaceholder).toBeInTheDocument();
-      expect(resultPasswordPlaceholder).toBeInTheDocument();
+      expect(emailInput).toBeInTheDocument();
+      expect(passwordInput).toBeInTheDocument();
     });
 
     test("Then it should show a form with a button inside with a text 'Send'", () => {
-      const expectedButtonText = "Send";
-
-      render(<LoginForm />, { wrapper: WrapperWithProviders });
+      customRender(<LoginForm />);
 
       const resultButton = screen.getByRole("button", {
-        name: expectedButtonText,
+        name: buttonText,
       });
 
       expect(resultButton).toBeInTheDocument();
     });
   });
 
-  describe("And the user types 'admin@admin.com' in the email input and '1234' in password input", () => {
-    test("Then it should update the input value with what the user entered", async () => {
-      const emailLabel = "Email";
-      const passwordLabel = "Password";
-      const expectedUserEmail = "admin@admin.com";
-      const expectedUserPassword = "1234";
+  describe("And the user types 'admin@admin.com' as email and '1234' as password in the text fields", () => {
+    test("Then it should update the text field value with what the user entered", () => {
+      const userEmail = "admin@admin.com";
+      const userPassword = "1234";
 
-      render(<LoginForm />, { wrapper: WrapperWithProviders });
+      customRender(<LoginForm />);
 
       const emailInput: HTMLInputElement = screen.getByLabelText(emailLabel);
-      await userEvent.type(emailInput, expectedUserEmail);
-      expect(emailInput.value).toBe(expectedUserEmail);
+      userEvent.type(emailInput, userEmail);
 
       const passwordInput: HTMLInputElement =
         screen.getByLabelText(passwordLabel);
-      await userEvent.type(passwordInput, expectedUserPassword);
-      expect(passwordInput.value).toBe(expectedUserPassword);
+      userEvent.type(passwordInput, userPassword);
+
+      expect(emailInput.value).toBe(userEmail);
+      expect(passwordInput.value).toBe(userPassword);
+    });
+  });
+
+  describe("And the user does not introduce their email and password", () => {
+    test("Then the button should be disabled", () => {
+      customRender(<LoginForm />);
+
+      const buttonForm = screen.getByRole("button", {
+        name: buttonText,
+      });
+
+      expect(buttonForm).toBeDisabled();
     });
   });
 });

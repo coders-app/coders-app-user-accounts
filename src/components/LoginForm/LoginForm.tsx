@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { UserCredentials } from "../../store/models/User";
 import LoginFormStyled from "./LoginFormStyled";
 
@@ -17,10 +17,12 @@ const LoginForm = (): JSX.Element => {
     });
   };
 
-  const handleOnSubmit = (event: SyntheticEvent) => {
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setCredentials(initialCredentials);
   };
+
+  const isFormValid = credentials.email !== "" && credentials.password !== "";
 
   return (
     <LoginFormStyled noValidate autoComplete="off" onSubmit={handleOnSubmit}>
@@ -34,7 +36,7 @@ const LoginForm = (): JSX.Element => {
           type="email"
           onChange={handleChangeForm}
         ></input>
-        <span className="form-group__message">Tot bé</span>
+        <span className="form-group__message">Tot malament</span>
       </div>
       <div className="form-group">
         <label className="form-group__title" htmlFor="password">
@@ -50,7 +52,7 @@ const LoginForm = (): JSX.Element => {
         ></input>
         <span className="form-group__message">Tot malament</span>
       </div>
-      <button className="button" type="submit">
+      <button className="button" type="submit" disabled={!isFormValid}>
         Send
       </button>
     </LoginFormStyled>
