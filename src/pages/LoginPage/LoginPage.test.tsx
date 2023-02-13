@@ -23,10 +23,9 @@ describe("Given the page LoginPage", () => {
 
       customRender(<LoginPage />);
 
-      const inputEmail: HTMLInputElement = screen.getByLabelText(emailLabel);
-      const inputPassword: HTMLInputElement =
-        screen.getByLabelText(passwordLabel);
-      const resultButton: HTMLButtonElement = screen.getByRole("button", {
+      const inputEmail = screen.getByLabelText(emailLabel);
+      const inputPassword = screen.getByLabelText(passwordLabel);
+      const resultButton = screen.getByRole("button", {
         name: buttonText,
       });
 

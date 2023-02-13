@@ -12,9 +12,8 @@ describe("Given a LoginForm", () => {
     test("Then it should show a text field with 'Email', 'Password", () => {
       customRender(<LoginForm />);
 
-      const emailInput: HTMLInputElement = screen.getByLabelText(emailLabel);
-      const passwordInput: HTMLInputElement =
-        screen.getByLabelText(passwordLabel);
+      const emailInput = screen.getByLabelText(emailLabel);
+      const passwordInput = screen.getByLabelText(passwordLabel);
 
       expect(emailInput).toBeInTheDocument();
       expect(passwordInput).toBeInTheDocument();
@@ -23,7 +22,7 @@ describe("Given a LoginForm", () => {
     test("Then it should show a form with a button inside with a text 'Send'", () => {
       customRender(<LoginForm />);
 
-      const resultButton: HTMLButtonElement = screen.getByRole("button", {
+      const resultButton = screen.getByRole("button", {
         name: buttonText,
       });
 
@@ -54,7 +53,7 @@ describe("Given a LoginForm", () => {
     test("Then the button should be disabled", () => {
       customRender(<LoginForm />);
 
-      const buttonForm: HTMLButtonElement = screen.getByRole("button", {
+      const buttonForm = screen.getByRole("button", {
         name: buttonText,
       });
 
