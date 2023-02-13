@@ -1,18 +1,8 @@
-import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
-import paths from "../utils/paths";
-import LoginPage from "../pages/LoginPage/LoginPage";
+import { createBrowserRouter } from "react-router-dom";
+import getRoutes from "./getRoutes";
 
-const { base: basePath, login: loginPath } = paths;
+const router = getRoutes();
 
-const browserRouter = createBrowserRouter([
-  {
-    path: basePath,
-    element: <Outlet />,
-    children: [
-      { index: true, element: <Navigate to={loginPath} replace /> },
-      { path: loginPath, element: <LoginPage /> },
-    ],
-  },
-]);
+const browserRouter = createBrowserRouter(router);
 
 export default browserRouter;

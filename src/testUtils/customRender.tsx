@@ -5,7 +5,12 @@ const customRender = (
   ui: React.ReactElement,
   renderOptions?: RenderOptions
 ) => {
-  return render(ui, { wrapper: WrapperWithProviders, ...renderOptions });
+  return {
+    ...render(ui, {
+      wrapper: (props) => <WrapperWithProviders {...props} />,
+      ...renderOptions,
+    }),
+  };
 };
 
 export default customRender;

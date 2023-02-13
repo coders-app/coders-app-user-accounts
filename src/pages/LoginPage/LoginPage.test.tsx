@@ -25,13 +25,13 @@ describe("Given the page LoginPage", () => {
 
       const inputEmail = screen.getByLabelText(emailLabel);
       const inputPassword = screen.getByLabelText(passwordLabel);
-      const resultButton = screen.getByRole("button", {
+      const button = screen.getByRole("button", {
         name: buttonText,
       });
 
       expect(inputEmail).toBeInTheDocument();
       expect(inputPassword).toBeInTheDocument();
-      expect(resultButton).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
     });
   });
 });

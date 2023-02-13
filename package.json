@@ -57,9 +57,7 @@
       "src/**/*.ts",
       "src/**/*.tsx",
       "!src/index.tsx",
-      "!src/react-app-env.d.ts",
-      "!src/components/App/App.tsx",
-      "!src/styles/GlobalStyle.tsx"
+      "!src/components/App/App.tsx"
     ]
   }
 }
