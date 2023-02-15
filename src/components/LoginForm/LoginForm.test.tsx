@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import customRender from "../../testUtils/customRender";
 import LoginForm from "./LoginForm";
@@ -31,18 +31,19 @@ describe("Given a LoginForm", () => {
   });
 
   describe("And the user types 'admin@admin.com' as email and '1234' as password in the text fields", () => {
-    test("Then it should update the text field value with what the user entered", () => {
+    test("Then it should update the text field value with what the user entered", async () => {
       const userEmail = "admin@admin.com";
       const userPassword = "1234";
 
       customRender(<LoginForm />);
 
       const emailInput: HTMLInputElement = screen.getByLabelText(emailLabel);
-      userEvent.type(emailInput, userEmail);
 
       const passwordInput: HTMLInputElement =
         screen.getByLabelText(passwordLabel);
-      userEvent.type(passwordInput, userPassword);
+
+      await act(async () => await userEvent.type(emailInput, userEmail));
+      await act(async () => await userEvent.type(passwordInput, userPassword));
 
       expect(emailInput.value).toBe(userEmail);
       expect(passwordInput.value).toBe(userPassword);
