@@ -61,4 +61,41 @@ describe("Given a LoginForm", () => {
       expect(buttonForm).toBeDisabled();
     });
   });
+
+  describe("And the user types 'admin' as email and clicks on the password text field", () => {
+    test("Then it should show a message with text 'Invalid email format'", async () => {
+      const userEmail = "admin";
+      const emailFormatMessage = "Invalid email format";
+
+      customRender(<LoginForm />);
+
+      const emailInput = screen.getByLabelText(emailLabel);
+      await act(async () => await userEvent.type(emailInput, userEmail));
+
+      const passwordInput = screen.getByLabelText(passwordLabel);
+      await act(async () => await userEvent.click(passwordInput));
+
+      const validationMessage = screen.getByText(emailFormatMessage);
+
+      expect(validationMessage).toBeInTheDocument();
+    });
+  });
+
+  describe("And the user clicks on the password text field and not typing on it, and then clicks on the email text field", () => {
+    test("Then it should show a message with text 'Password is required'", async () => {
+      const requiredPasswordMessage = "Password is required";
+
+      customRender(<LoginForm />);
+
+      const passwordInput = screen.getByLabelText(passwordLabel);
+      await act(async () => await userEvent.click(passwordInput));
+
+      const emailInput = screen.getByLabelText(emailLabel);
+      await act(async () => await userEvent.click(emailInput));
+
+      const validationMessage = screen.getByText(requiredPasswordMessage);
+
+      expect(validationMessage).toBeInTheDocument();
+    });
+  });
 });
