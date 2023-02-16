@@ -1,11 +1,11 @@
-import { InitialEntry } from "@remix-run/router";
 import { createMemoryRouter, Outlet } from "react-router";
 import getRoutes from "../../routers/getRoutes";
+import { MemoryRouterOptions } from "./types";
 
-const getMemoryRouter = (
-  element: React.ReactElement = <Outlet />,
-  initialEntries: InitialEntry[]
-) => {
+const getMemoryRouter = ({
+  initialEntries,
+  element = <Outlet />,
+}: MemoryRouterOptions) => {
   const routes = getRoutes(element);
 
   return createMemoryRouter(routes, {
