@@ -34,9 +34,9 @@ const LoginForm = (): JSX.Element => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         ></input>
-        {formik.errors.email && formik.touched.email && (
-          <span className="form-group__message">{formik.errors.email}</span>
-        )}
+        <span className="form-group__message">
+          {formik.touched.email && formik.errors.email}
+        </span>
       </div>
       <div className="form-group">
         <label className="form-group__title" htmlFor="password">
@@ -51,9 +51,9 @@ const LoginForm = (): JSX.Element => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         ></input>
-        {formik.errors.password && formik.touched.password && (
-          <span className="form-group__message">{formik.errors.password}</span>
-        )}
+        <span className="form-group__message">
+          {formik.touched.password && formik.errors.password}
+        </span>
       </div>
       <button
         className="button"

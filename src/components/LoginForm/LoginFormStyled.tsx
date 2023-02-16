@@ -19,6 +19,7 @@ const LoginFormStyled = styled.form`
       font-size: 0.75rem;
       align-self: flex-start;
       color: ${({ theme: { colors } }) => colors.feedback.alert};
+      min-height: 1rem;
     }
   }
 
