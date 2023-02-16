@@ -10,10 +10,10 @@ const routerRender = (
   renderOptions?: RenderOptions
 ) => {
   const router = wrapperOptions?.initialEntries
-    ? getMemoryRouter(
-        wrapperOptions?.routeElement,
-        wrapperOptions?.initialEntries
-      )
+    ? getMemoryRouter({
+        initialEntries: wrapperOptions?.initialEntries,
+        element: wrapperOptions?.routeElement!,
+      })
     : browserRouter;
   return {
     ...customRender(<RouterProvider router={router} />, {
