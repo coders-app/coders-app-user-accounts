@@ -2,10 +2,10 @@ import { screen } from "@testing-library/react";
 import paths from "../utils/paths";
 import routerRender from "../testUtils/routersUtils/routerRender";
 
-describe("Given a Router", () => {
+describe("Given a RouterProvider", () => {
   const loginHeadingText = /login/i;
 
-  describe("When it's in path '/'", () => {
+  describe("When it's render with path '/'", () => {
     test("Then it should show a title with 'Login' inside", () => {
       routerRender();
 
@@ -16,7 +16,7 @@ describe("Given a Router", () => {
       expect(loginTitle).toBeInTheDocument();
     });
 
-    describe("When it receives a path '/login'", () => {
+    describe("When it's render with path '/login'", () => {
       test("Then it should show a title with 'Login' inside", () => {
         routerRender({ initialEntries: [paths.login] });
 
