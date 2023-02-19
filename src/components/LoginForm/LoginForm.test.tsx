@@ -9,24 +9,24 @@ describe("Given a LoginForm", () => {
   const passwordLabel = /password/i;
 
   describe("When it's rendered", () => {
-    test("Then it should show a text field with 'Email', 'Password", () => {
+    test("Then it should show two text fields with 'Email' and 'Password", () => {
       customRender(<LoginForm />);
 
-      const emailInput = screen.getByLabelText(emailLabel);
-      const passwordInput = screen.getByLabelText(passwordLabel);
+      const emailField = screen.getByLabelText(emailLabel);
+      const passwordField = screen.getByLabelText(passwordLabel);
 
-      expect(emailInput).toBeInTheDocument();
-      expect(passwordInput).toBeInTheDocument();
+      expect(emailField).toBeInTheDocument();
+      expect(passwordField).toBeInTheDocument();
     });
 
-    test("Then it should show a form with a button inside with a text 'Send'", () => {
+    test("Then it should show a button with the text 'Send'", () => {
       customRender(<LoginForm />);
 
-      const resultButton = screen.getByRole("button", {
+      const button = screen.getByRole("button", {
         name: buttonText,
       });
 
-      expect(resultButton).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
     });
   });
 
@@ -37,16 +37,14 @@ describe("Given a LoginForm", () => {
 
       customRender(<LoginForm />);
 
-      const emailInput: HTMLInputElement = screen.getByLabelText(emailLabel);
+      const emailField = screen.getByLabelText(emailLabel);
+      const passwordField = screen.getByLabelText(passwordLabel);
 
-      const passwordInput: HTMLInputElement =
-        screen.getByLabelText(passwordLabel);
+      await act(async () => await userEvent.type(emailField, userEmail));
+      await act(async () => await userEvent.type(passwordField, userPassword));
 
-      await act(async () => await userEvent.type(emailInput, userEmail));
-      await act(async () => await userEvent.type(passwordInput, userPassword));
-
-      expect(emailInput.value).toBe(userEmail);
-      expect(passwordInput.value).toBe(userPassword);
+      expect(emailField).toHaveValue(userEmail);
+      expect(passwordField).toHaveValue(userPassword);
     });
   });
 
@@ -54,11 +52,11 @@ describe("Given a LoginForm", () => {
     test("Then the button should be disabled", () => {
       customRender(<LoginForm />);
 
-      const buttonForm = screen.getByRole("button", {
+      const button = screen.getByRole("button", {
         name: buttonText,
       });
 
-      expect(buttonForm).toBeDisabled();
+      expect(button).toBeDisabled();
     });
   });
 
@@ -69,8 +67,8 @@ describe("Given a LoginForm", () => {
 
       customRender(<LoginForm />);
 
-      const emailInput = screen.getByLabelText(emailLabel);
-      await act(async () => await userEvent.type(emailInput, userEmail));
+      const emailField = screen.getByLabelText(emailLabel);
+      await act(async () => await userEvent.type(emailField, userEmail));
 
       const passwordInput = screen.getByLabelText(passwordLabel);
       await act(async () => await userEvent.click(passwordInput));
@@ -87,8 +85,8 @@ describe("Given a LoginForm", () => {
 
       customRender(<LoginForm />);
 
-      const passwordInput = screen.getByLabelText(passwordLabel);
-      await act(async () => await userEvent.click(passwordInput));
+      const passwordField = screen.getByLabelText(passwordLabel);
+      await act(async () => await userEvent.click(passwordField));
 
       const emailInput = screen.getByLabelText(emailLabel);
       await act(async () => await userEvent.click(emailInput));
