@@ -1,8 +1,8 @@
 import { renderHook } from "@testing-library/react";
 import * as router from "react-router";
-import WrapperWithProviders from "../../../testUtils/wrappers/WrapperWithProviders";
-import { UserCredentials } from "../../models/User";
+import { UserCredentials } from "../types";
 import useUser from "./useUser";
+import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
 
 const mockNavigate = jest.fn();
 
@@ -20,11 +20,11 @@ describe("Given a useUser custom hook", () => {
 
       const {
         result: {
-          current: { getCookie },
+          current: { getLoginCookie },
         },
       } = renderHook(() => useUser(), { wrapper: WrapperWithProviders });
 
-      await getCookie(userCredentials);
+      await getLoginCookie(userCredentials);
 
       expect(mockNavigate).toHaveBeenCalled();
     });
