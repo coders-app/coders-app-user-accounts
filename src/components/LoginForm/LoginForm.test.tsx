@@ -53,7 +53,7 @@ describe("Given a LoginForm", () => {
     });
 
     describe("And the user clicks 'send' button", () => {
-      test("Then it should send user credentials data", async () => {
+      test("Then it sould invoke getLoginCookie", async () => {
         customRender(<LoginForm />);
 
         const emailField = screen.getByLabelText(emailLabel);
