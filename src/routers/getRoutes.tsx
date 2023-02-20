@@ -1,16 +1,16 @@
 import { Navigate } from "react-router";
 import App from "../components/App/App";
 import LoginPage from "../pages/LoginPage/LoginPage";
-import paths from "../utils/paths";
+import routerPaths from "./routerPaths";
 
 const getRoutes = (routerElement: React.ReactElement = <App />) => {
   return [
     {
-      path: paths.base,
+      path: routerPaths.base,
       element: routerElement,
       children: [
-        { index: true, element: <Navigate to={paths.login} replace /> },
-        { path: paths.login, element: <LoginPage /> },
+        { index: true, element: <Navigate to={routerPaths.login} replace /> },
+        { path: routerPaths.login, element: <LoginPage /> },
       ],
     },
   ];

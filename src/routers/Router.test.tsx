@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import paths from "../utils/paths";
+import routerPaths from "./routerPaths";
 import routerRender from "../testUtils/routersUtils/routerRender";
 
 describe("Given a RouterProvider", () => {
@@ -18,7 +18,7 @@ describe("Given a RouterProvider", () => {
 
     describe("When it's render with path '/login'", () => {
       test("Then it should show a title with 'Login' inside", () => {
-        routerRender({ initialEntries: [paths.login] });
+        routerRender({ initialEntries: [routerPaths.login] });
 
         const loginTitle: HTMLHeadingElement = screen.getByRole("heading", {
           name: loginHeadingText,
