@@ -3,6 +3,12 @@ import userEvent from "@testing-library/user-event";
 import customRender from "../../testUtils/customRender";
 import LoginForm from "./LoginForm";
 
+const mockLogin = jest.fn();
+
+jest.mock("../../hooks/useUser/useUser", () => () => ({
+  getLoginCookie: mockLogin,
+}));
+
 describe("Given a LoginForm", () => {
   const buttonText = /send/i;
   const emailLabel = /email/i;
@@ -31,10 +37,9 @@ describe("Given a LoginForm", () => {
   });
 
   describe("When it's rendered and the user types 'admin@admin.com' as email and '1234' as password in the text fields", () => {
+    const userEmail = "admin@admin.com";
+    const userPassword = "1234";
     test("Then it should update the text field value with what the user entered", async () => {
-      const userEmail = "admin@admin.com";
-      const userPassword = "1234";
-
       customRender(<LoginForm />);
 
       const emailField = screen.getByLabelText(emailLabel);
@@ -45,6 +50,27 @@ describe("Given a LoginForm", () => {
 
       expect(emailField).toHaveValue(userEmail);
       expect(passwordField).toHaveValue(userPassword);
+    });
+
+    describe("And the user clicks 'send' button", () => {
+      test("Then it should send user credentials data", async () => {
+        customRender(<LoginForm />);
+
+        const emailField = screen.getByLabelText(emailLabel);
+        const passwordField = screen.getByLabelText(passwordLabel);
+
+        await act(async () => await userEvent.type(emailField, userEmail));
+        await act(
+          async () => await userEvent.type(passwordField, userPassword)
+        );
+
+        const button = screen.getByRole("button", {
+          name: buttonText,
+        });
+        await act(async () => await userEvent.click(button));
+
+        expect(mockLogin).toHaveBeenCalled();
+      });
     });
   });
 
