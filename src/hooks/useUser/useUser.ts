@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { UserCredentials } from "../../models/User";
-import { apiPaths } from "../apiPaths";
+import { apiPaths } from "../../constants/apiPaths/apiPaths";
+import { UserCredentials } from "../types";
 
 const useUser = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const useUser = () => {
     navigate("/apps");
   };
 
-  return { getCookie: getLoginCookie };
+  return { getLoginCookie };
 };
 
 export default useUser;

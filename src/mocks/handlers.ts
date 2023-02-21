@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { apiPaths } from "../store/hooks/apiPaths";
+import { apiPaths } from "../constants/apiPaths/apiPaths";
 
 const handlers = [
   rest.post(
