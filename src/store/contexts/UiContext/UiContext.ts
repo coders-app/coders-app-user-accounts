@@ -1,12 +1,10 @@
 import { createContext } from "react";
 
 export interface UiContextStructure {
-  modal: {
+  error: {
     message: string;
     isError: boolean;
   };
-  openModal: (message: string, isError?: boolean) => void;
-  closeModal: () => void;
 }
 
 export const UiContext = createContext<UiContextStructure>(
