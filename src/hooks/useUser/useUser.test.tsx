@@ -1,10 +1,11 @@
 import { act, renderHook } from "@testing-library/react";
 import * as router from "react-router";
-import { errorHandlers } from "../../../mocks/handlers";
-import server from "../../../mocks/server";
-import WrapperWithProviders from "../../../testUtils/wrappers/WrapperWithProviders";
-import { WrapperWithValues } from "../../../testUtils/wrappers/WrapperWithValues";
-import { UserCredentials } from "../../models/User";
+import { errorHandlers } from "../../mocks/handlers";
+import server from "../../mocks/server";
+import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
+import { WrapperWithValues } from "../../testUtils/wrappers/WrapperWithValues";
+import { UserCredentials } from "../types";
+
 import useUser from "./useUser";
 
 beforeEach(() => {

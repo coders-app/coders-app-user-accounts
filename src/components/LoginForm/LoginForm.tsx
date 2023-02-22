@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
-import { UserCredentials } from "../../store/models/User";
+import { UserCredentials } from "../../hooks/types";
+import useUser from "../../hooks/useUser/useUser";
 import credentialsSchema from "../../utils/schemas/credentialsSchema";
 import LoginFormStyled from "./LoginFormStyled";
 
 const LoginForm = (): JSX.Element => {
+  const { getLoginCookie } = useUser();
+
   const initialCredentials: UserCredentials = {
     email: "",
     password: "",
@@ -12,7 +15,8 @@ const LoginForm = (): JSX.Element => {
   const formik = useFormik({
     initialValues: initialCredentials,
     validationSchema: credentialsSchema,
-    onSubmit: () => {
+    onSubmit: (userCredentials) => {
+      getLoginCookie(userCredentials);
       formik.resetForm();
     },
   });
