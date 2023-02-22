@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import useUi from "../../hooks/useUi/useUi";
+import useUi from "../../../hooks/useUi/useUi";
 import { UiContext } from "./UiContext";
 
 interface UiContextProviderProps {

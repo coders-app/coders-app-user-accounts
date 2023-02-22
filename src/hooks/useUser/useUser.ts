@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
-import { UserCredentials } from "../types";
+import { UserCredentials } from "./types";
 
 const useUser = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const useUser = () => {
     }
   };
 
-  return { getCookie: getLoginCookie };
+  return { getLoginCookie };
 };
 
 export default useUser;

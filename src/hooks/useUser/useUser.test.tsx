@@ -4,8 +4,7 @@ import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
 import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
 import { WrapperWithValues } from "../../testUtils/wrappers/WrapperWithValues";
-import { UserCredentials } from "../types";
-
+import { UserCredentials } from "./types";
 import useUser from "./useUser";
 
 beforeEach(() => {
@@ -33,10 +32,10 @@ describe("Given a useUser custom hook", () => {
     test("Then useNavigate should be invoked", async () => {
       const {
         result: {
-          current: { getCookie },
+          current: { getLoginCookie },
         },
       } = renderHook(() => useUser(), { wrapper: WrapperWithProviders });
-      await getCookie(userCredentials);
+      await getLoginCookie(userCredentials);
       expect(mockNavigate).toHaveBeenCalled();
     });
   });
@@ -49,7 +48,7 @@ describe("Given a useUser custom hook", () => {
     test("Then showError should be called with 'Error on login, try again later'", async () => {
       const {
         result: {
-          current: { getCookie },
+          current: { getLoginCookie },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -61,7 +60,7 @@ describe("Given a useUser custom hook", () => {
 
       const expectedMessage = "Error on login, try again later";
 
-      await act(async () => getCookie(userCredentials));
+      await act(async () => getLoginCookie(userCredentials));
 
       expect(showError).toHaveBeenCalledWith(expectedMessage);
     });
