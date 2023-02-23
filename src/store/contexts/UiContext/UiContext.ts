@@ -5,6 +5,8 @@ export interface UiContextStructure {
     message: string;
     isError: boolean;
   };
+  closeError: () => void;
+  showError: (errorMessage: string) => void;
 }
 
 export const UiContext = createContext<UiContextStructure>(
