@@ -4,7 +4,7 @@ import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
 import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
 import { WrapperWithValues } from "../../testUtils/wrappers/WrapperWithValues";
-import { UserCredentials } from "./types";
+import { UserCredentials } from "../../types";
 import useUser from "./useUser";
 
 beforeEach(() => {

@@ -3,9 +3,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
-import { UserCredentials } from "./types";
+import { UserCredentials } from "../../types";
+import { UseUserStructure } from "../types";
 
-const useUser = () => {
+const useUser = (): UseUserStructure => {
   const navigate = useNavigate();
   const { showError } = useContext(UiContext);
 

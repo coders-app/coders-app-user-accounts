@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { UserCredentials } from "../../hooks/useUser/types";
+import { UserCredentials } from "../../hooks/types";
 import useUser from "../../hooks/useUser/useUser";
 import credentialsSchema from "../../utils/schemas/credentialsSchema";
 import LoginFormStyled from "./LoginFormStyled";
