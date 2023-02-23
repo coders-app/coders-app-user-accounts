@@ -1,22 +1,25 @@
-import { useCallback } from "react";
-import useUi from "../../../hooks/useUi/useUi";
-import { UiContext } from "./UiContext";
+import { useMemo, useReducer } from "react";
+import uiReducer from "../../reducers/uiReducer/uiReducer";
+import { UiContext, UiState } from "./UiContext";
 
 interface UiContextProviderProps {
   children: JSX.Element | JSX.Element[];
 }
 
+export const initialUiState: UiState = {
+  error: {
+    message: "",
+    isError: false,
+  },
+};
+
 const UiContextProvider = ({
   children,
 }: UiContextProviderProps): JSX.Element => {
-  const { error, closeError, showError } = useUi();
+  const [currentUiState, dispatch] = useReducer(uiReducer, initialUiState);
+  const store = useMemo(() => ({ currentUiState, dispatch }), [currentUiState]);
 
-  const store = useCallback(
-    () => ({ error, closeError, showError }),
-    [error, closeError, showError]
-  );
-
-  return <UiContext.Provider value={store()}>{children}</UiContext.Provider>;
+  return <UiContext.Provider value={store}>{children}</UiContext.Provider>;
 };
 
 export default UiContextProvider;
