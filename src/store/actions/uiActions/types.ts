@@ -1,6 +1,6 @@
 export enum UiActionType {
-  showError,
-  closeError,
+  showFeedback,
+  closeFeedback,
 }
 
 export interface UiAction {
@@ -8,11 +8,11 @@ export interface UiAction {
   payload?: unknown;
 }
 
-export interface ShowErrorAction extends UiAction {
-  type: UiActionType.showError;
+export interface ShowFeedbackAction extends UiAction {
+  type: UiActionType.showFeedback;
   payload: string;
 }
 
-export interface CloseErrorAction extends UiAction {
-  type: UiActionType.closeError;
+export interface CloseFeedbackAction extends UiAction {
+  type: UiActionType.closeFeedback;
 }

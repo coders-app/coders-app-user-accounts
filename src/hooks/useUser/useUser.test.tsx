@@ -3,7 +3,7 @@ import * as router from "react-router";
 import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
 import { UiAction } from "../../store/actions/uiActions/types";
-import { showErrorActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
+import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
 import { UiState } from "../../store/contexts/UiContext/UiContext";
 import { initialUiState } from "../../store/contexts/UiContext/UiContextProvider";
 import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
@@ -47,7 +47,7 @@ describe("Given a useUser custom hook", () => {
       server.resetHandlers(...errorHandlers);
     });
 
-    test("Then dispatch should be invoked with showErrorAction with message 'Error on login, try again later'", async () => {
+    test("Then dispatch should be invoked with showFeedbackAction with message 'Error on login, try again later'", async () => {
       const {
         result: {
           current: { getLoginCookie },
@@ -65,7 +65,7 @@ describe("Given a useUser custom hook", () => {
       await act(async () => getLoginCookie(userCredentials));
 
       expect(uiDispatch).toHaveBeenCalledWith(
-        showErrorActionCreator(expectedMessage)
+        showFeedbackActionCreator(expectedMessage)
       );
     });
   });

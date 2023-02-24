@@ -1,12 +1,12 @@
-import { CloseErrorAction, ShowErrorAction, UiActionType } from "./types";
+import { CloseFeedbackAction, ShowFeedbackAction, UiActionType } from "./types";
 
-export const showErrorActionCreator = (
-  errorMessage: string
-): ShowErrorAction => ({
-  type: UiActionType.showError,
-  payload: errorMessage,
+export const showFeedbackActionCreator = (
+  message: string
+): ShowFeedbackAction => ({
+  type: UiActionType.showFeedback,
+  payload: message,
 });
 
-export const closeErrorActionCreator = (): CloseErrorAction => ({
-  type: UiActionType.closeError,
+export const closeFeedbackActionCreator = (): CloseFeedbackAction => ({
+  type: UiActionType.closeFeedback,
 });

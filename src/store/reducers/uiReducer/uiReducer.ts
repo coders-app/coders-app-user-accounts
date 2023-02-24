@@ -1,5 +1,5 @@
 import {
-  ShowErrorAction,
+  ShowFeedbackAction,
   UiAction,
   UiActionType,
 } from "../../actions/uiActions/types";
@@ -8,19 +8,19 @@ import { UiState } from "../../contexts/UiContext/UiContext";
 const uiReducer = (currentUiState: UiState, action: UiAction): UiState => {
   let newUiState: UiState;
   switch (action.type) {
-    case UiActionType.showError:
+    case UiActionType.showFeedback:
       newUiState = {
         ...currentUiState,
-        error: {
-          message: (action as ShowErrorAction).payload,
+        feedback: {
+          message: (action as ShowFeedbackAction).payload,
           isError: true,
         },
       };
       break;
-    case UiActionType.closeError:
+    case UiActionType.closeFeedback:
       newUiState = {
         ...currentUiState,
-        error: { message: "", isError: false },
+        feedback: { message: "", isError: false },
       };
       break;
     default:

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
-import { showErrorActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
+import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
 import { UserCredentials } from "../../types";
 import { UseUserStructure } from "../types";
@@ -26,7 +26,7 @@ const useUser = (): UseUserStructure => {
 
       navigate("/apps");
     } catch {
-      dispatch(showErrorActionCreator("Error on login, try again later"));
+      dispatch(showFeedbackActionCreator("Error on login, try again later"));
     }
   };
 
