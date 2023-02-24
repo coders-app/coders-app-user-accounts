@@ -2,20 +2,22 @@ import { act, renderHook } from "@testing-library/react";
 import * as router from "react-router";
 import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
+import { UiAction } from "../../store/actions/uiActions/types";
+import { showErrorActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
+import { UiState } from "../../store/contexts/UiContext/UiContext";
+import { initialUiState } from "../../store/contexts/UiContext/UiContextProvider";
 import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
 import { WrapperWithValues } from "../../testUtils/wrappers/WrapperWithValues";
-import { UserCredentials } from "./types";
+import { UserCredentials } from "../../types";
 import useUser from "./useUser";
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
-const closeError = jest.fn();
-const showError = jest.fn();
-const error = { message: "", isError: false };
-
-const uiStore = { error, closeError, showError };
+const currentUiState: UiState = initialUiState;
+const uiDispatch: React.Dispatch<UiAction> = jest.fn();
+const uiStore = { dispatch: uiDispatch, currentUiState };
 
 const mockNavigate = jest.fn();
 beforeEach(() => {
@@ -45,7 +47,7 @@ describe("Given a useUser custom hook", () => {
       server.resetHandlers(...errorHandlers);
     });
 
-    test("Then showError should be called with 'Error on login, try again later'", async () => {
+    test("Then dispatch should be invoked with showErrorAction with message 'Error on login, try again later'", async () => {
       const {
         result: {
           current: { getLoginCookie },
@@ -62,7 +64,9 @@ describe("Given a useUser custom hook", () => {
 
       await act(async () => getLoginCookie(userCredentials));
 
-      expect(showError).toHaveBeenCalledWith(expectedMessage);
+      expect(uiDispatch).toHaveBeenCalledWith(
+        showErrorActionCreator(expectedMessage)
+      );
     });
   });
 });
