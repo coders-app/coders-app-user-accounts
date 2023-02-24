@@ -28,6 +28,10 @@ const LoginFormStyled = styled.form`
     background-color: ${({ theme: { colors } }) => colors.brands.base};
     border: 0;
   }
+
+  .error {
+    color: ${({ theme: { colors } }) => colors.feedback.alert};
+  }
 `;
 
 export default LoginFormStyled;

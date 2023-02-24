@@ -3,9 +3,14 @@ import { UserCredentials } from "../../types";
 import useUser from "../../hooks/useUser/useUser";
 import credentialsSchema from "../../utils/schemas/credentialsSchema";
 import LoginFormStyled from "./LoginFormStyled";
+import { useContext } from "react";
+import { UiContext } from "../../store/contexts/UiContext/UiContext";
 
 const LoginForm = (): JSX.Element => {
   const { getLoginCookie } = useUser();
+  const {
+    currentUiState: { feedback },
+  } = useContext(UiContext);
 
   const initialCredentials: UserCredentials = {
     email: "",
@@ -59,6 +64,11 @@ const LoginForm = (): JSX.Element => {
           {formik.touched.password && formik.errors.password}
         </span>
       </div>
+      {feedback && (
+        <span className={feedback.isError ? "error" : "feedback"}>
+          {feedback.message}
+        </span>
+      )}
       <button
         className="button"
         type="submit"
