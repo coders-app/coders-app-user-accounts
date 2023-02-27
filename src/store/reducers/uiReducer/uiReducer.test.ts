@@ -1,7 +1,7 @@
 import { UiActionType } from "../../actions/uiActions/types";
 import {
-  closeErrorActionCreator,
-  showErrorActionCreator,
+  closeFeedbackActionCreator,
+  showFeedbackActionCreator,
 } from "../../actions/uiActions/uiActionsCreators";
 import { UiState } from "../../contexts/UiContext/UiContext";
 import { initialUiState } from "../../contexts/UiContext/UiContextProvider";
@@ -9,29 +9,29 @@ import uiReducer from "./uiReducer";
 
 describe("Given a uiReducer function", () => {
   const currentUiState: UiState = {
-    error: { message: "General error", isError: true },
+    feedback: { message: "General error", isError: true },
   };
 
-  describe("When it's invoked with a current ui state and showError action", () => {
+  describe("When it's invoked with a current ui state and showFeedback action", () => {
     test("Then it should return a new ui state with the received error message and isError value true", () => {
-      const errorMessage = "Something went wrong";
-      const showErrorAction = showErrorActionCreator(errorMessage);
+      const message = "Something went wrong";
+      const showFeedbackAction = showFeedbackActionCreator(message);
       const expectedUiState: UiState = {
-        error: { message: errorMessage, isError: true },
+        feedback: { message: message, isError: true },
       };
 
-      const newUiState = uiReducer(currentUiState, showErrorAction);
+      const newUiState = uiReducer(currentUiState, showFeedbackAction);
 
       expect(newUiState).toStrictEqual(expectedUiState);
     });
   });
 
-  describe("When it's invoked with a current ui state and a closeError action", () => {
+  describe("When it's invoked with a current ui state and a closeFeedback action", () => {
     test("Then it should return a new ui state with an empty error message and isError value false", () => {
-      const closeErrorAction = closeErrorActionCreator();
+      const closeFeedbackAction = closeFeedbackActionCreator();
       const expectedUiState: UiState = initialUiState;
 
-      const newUiState = uiReducer(currentUiState, closeErrorAction);
+      const newUiState = uiReducer(currentUiState, closeFeedbackAction);
 
       expect(newUiState).toStrictEqual(expectedUiState);
     });

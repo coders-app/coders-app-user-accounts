@@ -1,9 +1,9 @@
-import { UserCredentials, ErrorData } from "../types";
+import { UserCredentials, FeedbackData } from "../types";
 
 export interface UseUiStructure {
-  showError: (errorMessage: string) => void;
-  closeError: () => void;
-  error: ErrorData;
+  showFeedback: (error: string) => void;
+  closeFeedback: () => void;
+  feedback: FeedbackData;
 }
 
 export interface UseUserStructure {

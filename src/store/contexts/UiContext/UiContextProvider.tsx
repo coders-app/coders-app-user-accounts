@@ -7,7 +7,7 @@ interface UiContextProviderProps {
 }
 
 export const initialUiState: UiState = {
-  error: {
+  feedback: {
     message: "",
     isError: false,
   },

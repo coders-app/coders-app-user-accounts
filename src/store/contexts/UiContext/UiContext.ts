@@ -7,7 +7,7 @@ export interface UiContextStructure {
 }
 
 export interface UiState {
-  error: {
+  feedback: {
     message: string;
     isError: boolean;
   };

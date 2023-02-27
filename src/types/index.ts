@@ -3,7 +3,7 @@ export interface UserCredentials {
   password: string;
 }
 
-export interface ErrorData {
+export interface FeedbackData {
   message: string;
   isError: boolean;
 }
