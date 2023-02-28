@@ -1,42 +1,51 @@
-import { useState } from "react";
-import { UserCredentials } from "../../store/models/User";
+import { useFormik } from "formik";
+import { UserCredentials } from "../../types";
+import useUser from "../../hooks/useUser/useUser";
+import credentialsSchema from "../../utils/schemas/credentialsSchema";
 import LoginFormStyled from "./LoginFormStyled";
+import { useContext } from "react";
+import { UiContext } from "../../store/contexts/UiContext/UiContext";
 
 const LoginForm = (): JSX.Element => {
+  const { getLoginCookie } = useUser();
+  const {
+    currentUiState: { feedback },
+  } = useContext(UiContext);
+
   const initialCredentials: UserCredentials = {
     email: "",
     password: "",
   };
 
-  const [credentials, setCredentials] = useState(initialCredentials);
-
-  const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCredentials({
-      ...credentials,
-      [event.target.id]: event.target.value,
-    });
-  };
-
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setCredentials(initialCredentials);
-  };
-
-  const isFormValid = credentials.email !== "" && credentials.password !== "";
+  const formik = useFormik({
+    initialValues: initialCredentials,
+    validationSchema: credentialsSchema,
+    onSubmit: (userCredentials) => {
+      getLoginCookie(userCredentials);
+      formik.resetForm();
+    },
+  });
 
   return (
-    <LoginFormStyled noValidate autoComplete="off" onSubmit={handleOnSubmit}>
+    <LoginFormStyled
+      noValidate
+      autoComplete="off"
+      onSubmit={formik.handleSubmit}
+    >
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
           className="form-group__box"
           placeholder="Introduce your Email"
-          value={credentials.email}
+          value={formik.values.email}
           id="email"
           type="email"
-          onChange={handleChangeForm}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         ></input>
-        <span className="form-group__message">Tot malament</span>
+        <span className="form-group__message">
+          {formik.touched.email && formik.errors.email}
+        </span>
       </div>
       <div className="form-group">
         <label className="form-group__title" htmlFor="password">
@@ -47,12 +56,24 @@ const LoginForm = (): JSX.Element => {
           placeholder="Introduce your Password"
           id="password"
           type="password"
-          value={credentials.password}
-          onChange={handleChangeForm}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         ></input>
-        <span className="form-group__message">Tot malament</span>
+        <span className="form-group__message">
+          {formik.touched.password && formik.errors.password}
+        </span>
       </div>
-      <button className="button" type="submit" disabled={!isFormValid}>
+      {feedback && (
+        <span className={feedback.isError ? "error" : "feedback"}>
+          {feedback.message}
+        </span>
+      )}
+      <button
+        className="button"
+        type="submit"
+        disabled={!(formik.dirty && formik.isValid)}
+      >
         Send
       </button>
     </LoginFormStyled>

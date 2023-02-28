@@ -18,6 +18,8 @@ const LoginFormStyled = styled.form`
     &__message {
       font-size: 0.75rem;
       align-self: flex-start;
+      color: ${({ theme: { colors } }) => colors.feedback.alert};
+      min-height: 1rem;
     }
   }
 
@@ -25,6 +27,10 @@ const LoginFormStyled = styled.form`
     padding: 8px;
     background-color: ${({ theme: { colors } }) => colors.brands.base};
     border: 0;
+  }
+
+  .error {
+    color: ${({ theme: { colors } }) => colors.feedback.alert};
   }
 `;
 
