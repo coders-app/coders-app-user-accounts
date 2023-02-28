@@ -2,14 +2,17 @@ import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
-import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionsCreators";
+import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
+import { loginUserActionCreator } from "../../store/actions/userActions/userActionCreators";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
+import { UserContext } from "../../store/contexts/userContext/userContext";
 import { UserCredentials } from "../../types";
 import { UseUserStructure } from "../types";
 
 const useUser = (): UseUserStructure => {
   const navigate = useNavigate();
-  const { dispatch } = useContext(UiContext);
+  const { dispatch: uiDispatch } = useContext(UiContext);
+  const { dispatch } = useContext(UserContext);
 
   const getLoginCookie = async (userCredentialsData: UserCredentials) => {
     try {
@@ -23,10 +26,10 @@ const useUser = (): UseUserStructure => {
           },
         }
       );
-
+      dispatch(loginUserActionCreator());
       navigate("/apps");
     } catch {
-      dispatch(showFeedbackActionCreator("Error on login, try again later"));
+      uiDispatch(showFeedbackActionCreator("Error on login, try again later"));
     }
   };
 
