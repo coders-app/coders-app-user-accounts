@@ -105,8 +105,9 @@ describe("Given a LoginForm", () => {
     });
   });
 
-  describe("When it's rendered and the user clicks on the password text field and not typing on it, and then clicks on the email text field", () => {
+  describe("When it's rendered and the user clicks on the password text field and not typing on it, and then clicks on the email text field and types 'admin@admin.com'", () => {
     test("Then it should show a message with text 'Password is required'", async () => {
+      const userEmail = "admin@admin.com";
       const requiredPasswordMessage = "Password is required";
 
       customRender(<LoginForm />);
@@ -116,6 +117,7 @@ describe("Given a LoginForm", () => {
 
       const emailInput = screen.getByLabelText(emailLabel);
       await act(async () => await userEvent.click(emailInput));
+      await act(async () => await userEvent.type(emailInput, userEmail));
 
       const validationMessage = screen.getByText(requiredPasswordMessage);
 
