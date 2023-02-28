@@ -2,7 +2,7 @@ import { UiActionType } from "../../actions/uiActions/types";
 import {
   closeFeedbackActionCreator,
   showFeedbackActionCreator,
-} from "../../actions/uiActions/uiActionsCreators";
+} from "../../actions/uiActions/uiActionCreators";
 import { UiState } from "../../contexts/UiContext/UiContext";
 import { initialUiState } from "../../contexts/UiContext/UiContextProvider";
 import uiReducer from "./uiReducer";

@@ -2,7 +2,7 @@ import { CloseFeedbackAction, ShowFeedbackAction, UiActionType } from "./types";
 import {
   closeFeedbackActionCreator,
   showFeedbackActionCreator,
-} from "./uiActionsCreators";
+} from "./uiActionCreators";
 
 describe("Given a showFeedbackActionCreator function", () => {
   describe("When it's invoked with message 'Something went wrong'", () => {
