@@ -6,6 +6,7 @@ const userReducer = (
   action: UserAction
 ): UserState => {
   let newUserState: UserState;
+
   switch (action.type) {
     case UserActionType.loginUser:
       newUserState = {
