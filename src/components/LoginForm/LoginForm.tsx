@@ -31,6 +31,7 @@ const LoginForm = (): JSX.Element => {
       noValidate
       autoComplete="off"
       onSubmit={formik.handleSubmit}
+      className="form"
     >
       <div className="form-group">
         <label htmlFor="email">Email</label>
@@ -64,11 +65,7 @@ const LoginForm = (): JSX.Element => {
           {formik.touched.password && formik.errors.password}
         </span>
       </div>
-      {feedback && (
-        <span className={feedback.isError ? "error" : "feedback"}>
-          {feedback.message}
-        </span>
-      )}
+      {feedback && <span className="form__error">{feedback.message}</span>}
       <button
         className="button"
         type="submit"
