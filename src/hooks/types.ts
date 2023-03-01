@@ -1,10 +1,4 @@
-import { UserCredentials, FeedbackData } from "../types";
-
-export interface UseUiStructure {
-  showFeedback: (error: string) => void;
-  closeFeedback: () => void;
-  feedback: FeedbackData;
-}
+import { UserCredentials } from "../types";
 
 export interface UseUserStructure {
   getLoginCookie: (userCredentials: UserCredentials) => void;
