@@ -2,8 +2,12 @@ import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
+import routerPaths from "../../routers/routerPaths";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
-import { loginUserActionCreator } from "../../store/actions/userActions/userActionCreators";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../../store/actions/userActions/userActionCreators";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
 import { UserContext } from "../../store/contexts/userContext/userContext";
 import { UserCredentials } from "../../types";
@@ -35,7 +39,12 @@ const useUser = (): UseUserStructure => {
     }
   };
 
-  return { getLoginCookie };
+  const logoutUser = () => {
+    dispatch(logoutUserActionCreator());
+    navigate(routerPaths.login);
+  };
+
+  return { getLoginCookie, logoutUser };
 };
 
 export default useUser;

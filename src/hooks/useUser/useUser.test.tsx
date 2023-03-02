@@ -5,7 +5,10 @@ import server from "../../mocks/server";
 import { UiAction } from "../../store/actions/uiActions/types";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import { UserAction } from "../../store/actions/userActions/types";
-import { loginUserActionCreator } from "../../store/actions/userActions/userActionCreators";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../../store/actions/userActions/userActionCreators";
 import { UiState } from "../../store/contexts/UiContext/UiContext";
 import { initialUiState } from "../../store/contexts/UiContext/UiContextProvider";
 import { UserState } from "../../store/contexts/userContext/userContext";
@@ -123,6 +126,60 @@ describe("Given a useUser custom hook", () => {
       expect(uiDispatch).toHaveBeenCalledWith(
         showFeedbackActionCreator(expectedMessage)
       );
+    });
+  });
+
+  describe("When its method logoutUser is invoked", () => {
+    test("Then dispatch should be invoked with a logoutUserAction", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      const logoutUserAction = logoutUserActionCreator();
+
+      logoutUser();
+
+      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+    });
+
+    test("Then useNavigate should be invoked", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      logoutUser();
+
+      expect(mockNavigate).toHaveBeenCalled();
     });
   });
 });
