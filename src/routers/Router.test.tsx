@@ -18,7 +18,9 @@ describe("Given a RouterProvider", () => {
 
     describe("When it's render with path '/login'", () => {
       test("Then it should show a title with 'Login' inside", () => {
-        routerRender({ initialEntries: [routerPaths.login] });
+        routerRender({
+          wrapperOptions: { initialEntries: [routerPaths.login] },
+        });
 
         const loginTitle: HTMLHeadingElement = screen.getByRole("heading", {
           name: loginHeadingText,

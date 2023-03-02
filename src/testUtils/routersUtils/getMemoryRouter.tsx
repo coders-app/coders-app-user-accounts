@@ -1,15 +1,15 @@
 import { createMemoryRouter, Outlet } from "react-router";
 import getRoutes from "../../routers/getRoutes";
-import { MemoryRouterOptions } from "./types";
+import { MemoryRouterOptions } from "../types";
 
 const getMemoryRouter = ({
   initialEntries,
-  element = <Outlet />,
+  routeElement = <Outlet />,
 }: MemoryRouterOptions) => {
-  const routes = getRoutes(element);
+  const routes = getRoutes(routeElement);
 
   return createMemoryRouter(routes, {
-    initialEntries: initialEntries,
+    initialEntries,
   });
 };
 
