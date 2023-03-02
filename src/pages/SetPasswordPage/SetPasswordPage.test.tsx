@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
-import customRender from "../../testUtils/customRender";
-import SetPasswordPage from "./SetPasswordPage";
+import routerPaths from "../../routers/routerPaths";
+import routerRender from "../../testUtils/routersUtils/routerRender";
 
 describe("Given the SetPasswordPage", () => {
   describe("When it is rendered", () => {
@@ -10,7 +10,9 @@ describe("Given the SetPasswordPage", () => {
         name: /set your password/i,
       };
 
-      customRender(<SetPasswordPage />);
+      routerRender({
+        wrapperOptions: { initialEntries: [routerPaths.setPassword] },
+      });
       const renderedHeading = screen.getByRole("heading", headingData);
 
       expect(renderedHeading).toBeInTheDocument();
