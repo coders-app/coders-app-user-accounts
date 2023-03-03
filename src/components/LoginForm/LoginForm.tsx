@@ -45,7 +45,7 @@ const LoginForm = (): JSX.Element => {
           onBlur={formik.handleBlur}
         ></input>
         <span className="form-group__message">
-          {formik.touched.email && formik.errors.email}
+          {formik.dirty && formik.touched.email && formik.errors.email}
         </span>
       </div>
       <div className="form-group">
@@ -62,7 +62,7 @@ const LoginForm = (): JSX.Element => {
           onBlur={formik.handleBlur}
         ></input>
         <span className="form-group__message">
-          {formik.touched.password && formik.errors.password}
+          {formik.dirty && formik.touched.password && formik.errors.password}
         </span>
       </div>
       {feedback && <span className="form__error">{feedback.message}</span>}
