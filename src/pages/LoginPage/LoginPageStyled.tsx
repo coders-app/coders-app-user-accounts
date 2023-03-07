@@ -7,8 +7,8 @@ const LoginPageStyled = styled.div`
   .login {
     &__link {
       padding: 8px;
-      color: #2daae1;
-      border: 0.1rem solid #2daae1;
+      color: ${({ theme: { colors } }) => colors.brands.base};
+      border: 0.1rem solid ${({ theme: { colors } }) => colors.brands.base};
       margin: 20px 0;
       width: max-content;
     }
