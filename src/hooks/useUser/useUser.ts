@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
 import routerPaths from "../../routers/routerPaths";
@@ -39,12 +39,27 @@ const useUser = (): UseUserStructure => {
     }
   };
 
+  const verifyUser = useCallback(async () => {
+    try {
+      await axios.get(`${apiPaths.root}${apiPaths.users.verify}`, {
+        validateStatus(status) {
+          return status === 200;
+        },
+      });
+
+      dispatch(loginUserActionCreator());
+    } catch {
+      dispatch(logoutUserActionCreator());
+      navigate(routerPaths.login);
+    }
+  }, [dispatch, navigate]);
+
   const logoutUser = () => {
     dispatch(logoutUserActionCreator());
     navigate(routerPaths.login);
   };
 
-  return { getLoginCookie, logoutUser };
+  return { getLoginCookie, verifyUser, logoutUser };
 };
 
 export default useUser;

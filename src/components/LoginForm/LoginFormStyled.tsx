@@ -23,14 +23,16 @@ const LoginFormStyled = styled.form`
     }
   }
 
+  .form {
+    &__error {
+      color: ${({ theme: { colors } }) => colors.feedback.alert};
+    }
+  }
+
   .button {
     padding: 8px;
     background-color: ${({ theme: { colors } }) => colors.brands.base};
     border: 0;
-  }
-
-  .error {
-    color: ${({ theme: { colors } }) => colors.feedback.alert};
   }
 `;
 
