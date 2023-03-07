@@ -217,4 +217,58 @@ describe("Given a useUser custom hook", () => {
       expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
   });
+
+  describe("When its method logoutUser is invoked", () => {
+    test("Then dispatch should be invoked with a logoutUserAction", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      const logoutUserAction = logoutUserActionCreator();
+
+      logoutUser();
+
+      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+    });
+
+    test("Then useNavigate should be invoked", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      logoutUser();
+
+      expect(mockNavigate).toHaveBeenCalled();
+    });
+  });
 });
