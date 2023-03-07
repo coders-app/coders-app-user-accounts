@@ -1,12 +1,12 @@
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
-import UiContextProvider from "../../store/contexts/UiContext/UiContextProvider";
-import GlobalStyle from "../../styles/GlobalStyle";
-import mainTheme from "../../styles/mainTheme";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
-import { WrapperWithProvidersProps } from "../types";
+import UiContextProvider from "../../store/contexts/UiContext/UiContextProvider";
 import { UserContext } from "../../store/contexts/userContext/userContext";
 import UserContextProvider from "../../store/contexts/userContext/userContextProvider";
+import GlobalStyle from "../../styles/GlobalStyle";
+import mainTheme from "../../styles/mainTheme";
+import { WrapperWithProvidersProps } from "../types";
 
 const WrapperWithProviders = ({
   children,
@@ -31,6 +31,7 @@ const WrapperWithProviders = ({
       <UserContextProvider>{children as JSX.Element}</UserContextProvider>
     );
   };
+
   return (
     <UiContextWrapper>
       <UserContextWrapper>

@@ -54,7 +54,12 @@ const useUser = (): UseUserStructure => {
     }
   }, [dispatch, navigate]);
 
-  return { getLoginCookie, verifyUser };
+  const logoutUser = () => {
+    dispatch(logoutUserActionCreator());
+    navigate(routerPaths.login);
+  };
+
+  return { getLoginCookie, verifyUser, logoutUser };
 };
 
 export default useUser;
