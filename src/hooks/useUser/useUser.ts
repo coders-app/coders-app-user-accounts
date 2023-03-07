@@ -1,9 +1,13 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
+import routerPaths from "../../routers/routerPaths";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
-import { loginUserActionCreator } from "../../store/actions/userActions/userActionCreators";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../../store/actions/userActions/userActionCreators";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
 import { UserContext } from "../../store/contexts/userContext/userContext";
 import { UserCredentials } from "../../types";
@@ -35,7 +39,22 @@ const useUser = (): UseUserStructure => {
     }
   };
 
-  return { getLoginCookie };
+  const verifyUser = useCallback(async () => {
+    try {
+      await axios.get(`${apiPaths.root}${apiPaths.users.verify}`, {
+        validateStatus(status) {
+          return status === 200;
+        },
+      });
+
+      dispatch(loginUserActionCreator());
+    } catch {
+      dispatch(logoutUserActionCreator());
+      navigate(routerPaths.login);
+    }
+  }, [dispatch, navigate]);
+
+  return { getLoginCookie, verifyUser };
 };
 
 export default useUser;
