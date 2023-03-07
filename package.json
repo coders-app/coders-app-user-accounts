@@ -60,8 +60,7 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "src/**/*.tsx",
-      "!src/index.tsx",
-      "!src/components/App/App.tsx"
+      "!src/index.tsx"
     ]
   }
 }
