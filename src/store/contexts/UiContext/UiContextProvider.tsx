@@ -2,7 +2,7 @@ import { useMemo, useReducer } from "react";
 import uiReducer from "../../reducers/uiReducer/uiReducer";
 import { UiContext, UiState } from "./UiContext";
 
-interface UiContextProviderProps {
+export interface UiContextProviderProps {
   children: JSX.Element | JSX.Element[];
 }
 

@@ -13,7 +13,7 @@ import { UiState } from "../../store/contexts/UiContext/UiContext";
 import { initialUiState } from "../../store/contexts/UiContext/UiContextProvider";
 import { UserState } from "../../store/contexts/userContext/userContext";
 import { initialUserState } from "../../store/contexts/userContext/userContextProvider";
-import { WrapperWithValues } from "../../testUtils/wrappers/WrapperWithValues";
+import WrapperWithProviders from "../../testUtils/wrappers/WrapperWithProviders";
 import { UserCredentials } from "../../types";
 import useUser from "./useUser";
 
@@ -23,11 +23,11 @@ beforeEach(() => {
 
 const currentUiState: UiState = initialUiState;
 const uiDispatch: React.Dispatch<UiAction> = jest.fn();
-const uiStore = { dispatch: uiDispatch, currentUiState };
+const mockUiStore = { dispatch: uiDispatch, currentUiState };
 
 const currentUserState: UserState = initialUserState;
 const userDispatch: React.Dispatch<UserAction> = jest.fn();
-const userStore = { dispatch: userDispatch, currentUserState };
+const mockUserStore = { dispatch: userDispatch, currentUserState };
 
 const mockNavigate = jest.fn();
 beforeEach(() => {
@@ -49,9 +49,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
@@ -71,9 +76,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
@@ -97,9 +107,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
@@ -123,9 +138,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
@@ -151,9 +171,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
@@ -171,9 +196,14 @@ describe("Given a useUser custom hook", () => {
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
           return (
-            <WrapperWithValues uiStore={uiStore} userStore={userStore}>
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
               {children}
-            </WrapperWithValues>
+            </WrapperWithProviders>
           );
         },
       });
