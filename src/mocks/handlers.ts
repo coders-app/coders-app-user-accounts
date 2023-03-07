@@ -26,7 +26,7 @@ export const errorHandlers = [
   rest.get(
     `${apiPaths.root}${apiPaths.users.verify}`,
     async (req, res, ctx) => {
-      return res(ctx.status(404));
+      return res(ctx.status(401));
     }
   ),
 ];

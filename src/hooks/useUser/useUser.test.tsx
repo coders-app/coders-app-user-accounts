@@ -158,7 +158,7 @@ describe("Given a useUser custom hook", () => {
     });
   });
 
-  describe("When its method verifyUser is invoked and the response has status code 404", () => {
+  describe("When its method verifyUser is invoked and the response has status code 401", () => {
     beforeEach(() => {
       server.resetHandlers(...errorHandlers);
     });
