@@ -1,6 +1,6 @@
 import { UserCredentials } from "../types";
 
 export interface UseUserStructure {
-  getLoginCookie: (userCredentials: UserCredentials) => void;
-  verifyUser: () => void;
+  getLoginCookie: (userCredentials: UserCredentials) => Promise<void>;
+  verifyUser: () => Promise<void>;
 }
