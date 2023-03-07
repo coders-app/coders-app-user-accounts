@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/react";
-import customRender from "../../testUtils/customRender";
-import LoginPage from "./LoginPage";
+import routerRender from "../../testUtils/routersUtils/routerRender";
 
 const mockLogin = jest.fn();
 
@@ -16,7 +15,7 @@ describe("Given the page LoginPage", () => {
         name: /login/i,
       };
 
-      customRender(<LoginPage />);
+      routerRender();
       const renderedHeading = screen.getByRole("heading", headingData);
 
       expect(renderedHeading).toBeInTheDocument();
@@ -27,8 +26,7 @@ describe("Given the page LoginPage", () => {
       const passwordLabel = /password/i;
       const buttonText = /send/i;
 
-      customRender(<LoginPage />);
-
+      routerRender();
       const inputEmail = screen.getByLabelText(emailLabel);
       const inputPassword = screen.getByLabelText(passwordLabel);
       const button = screen.getByRole("button", {
@@ -38,6 +36,15 @@ describe("Given the page LoginPage", () => {
       expect(inputEmail).toBeInTheDocument();
       expect(inputPassword).toBeInTheDocument();
       expect(button).toBeInTheDocument();
+    });
+
+    test("Then it should show a link with text 'Reset password'", () => {
+      const linkData = { name: "Reset password" };
+
+      routerRender();
+      const resetPasswordLink = screen.getByRole("link", linkData);
+
+      expect(resetPasswordLink).toBeInTheDocument();
     });
   });
 });
