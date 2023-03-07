@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import * as router from "react-router";
 import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
+import routerPaths from "../../routers/routerPaths";
 import { UiAction } from "../../store/actions/uiActions/types";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import { UserAction } from "../../store/actions/userActions/types";
@@ -163,7 +164,8 @@ describe("Given a useUser custom hook", () => {
       server.resetHandlers(...errorHandlers);
     });
 
-    test("Then useNavigate should be invoked", async () => {
+    test("Then useNavigate should be invoked with path '/login'", async () => {
+      const loginPath = routerPaths.login;
       const {
         result: {
           current: { verifyUser },
@@ -185,7 +187,7 @@ describe("Given a useUser custom hook", () => {
 
       await verifyUser();
 
-      expect(mockNavigate).toHaveBeenCalled();
+      expect(mockNavigate).toHaveBeenCalledWith(loginPath);
     });
 
     test("Then dispatch should be invoked with a logoutUserAction", async () => {

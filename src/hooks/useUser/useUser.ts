@@ -2,6 +2,7 @@ import axios from "axios";
 import { useCallback, useContext } from "react";
 import { useNavigate } from "react-router";
 import { apiPaths } from "../../constants/apiPaths/apiPaths";
+import routerPaths from "../../routers/routerPaths";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import {
   loginUserActionCreator,
@@ -49,7 +50,7 @@ const useUser = (): UseUserStructure => {
       dispatch(loginUserActionCreator());
     } catch {
       dispatch(logoutUserActionCreator());
-      navigate("/login");
+      navigate(routerPaths.login);
     }
   }, [dispatch, navigate]);
 
