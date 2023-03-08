@@ -8,6 +8,12 @@ export const handlers = [
       return res(ctx.status(200));
     }
   ),
+  rest.get(
+    `${apiPaths.root}${apiPaths.users.verify}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(200));
+    }
+  ),
 ];
 
 export const errorHandlers = [
@@ -15,6 +21,12 @@ export const errorHandlers = [
     `${apiPaths.root}${apiPaths.users.login}`,
     async (req, res, ctx) => {
       return res(ctx.status(404));
+    }
+  ),
+  rest.get(
+    `${apiPaths.root}${apiPaths.users.verify}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(401));
     }
   ),
 ];

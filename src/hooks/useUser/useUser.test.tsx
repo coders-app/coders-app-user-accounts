@@ -2,10 +2,14 @@ import { act, renderHook } from "@testing-library/react";
 import * as router from "react-router";
 import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
+import routerPaths from "../../routers/routerPaths";
 import { UiAction } from "../../store/actions/uiActions/types";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import { UserAction } from "../../store/actions/userActions/types";
-import { loginUserActionCreator } from "../../store/actions/userActions/userActionCreators";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../../store/actions/userActions/userActionCreators";
 import { UiState } from "../../store/contexts/UiContext/UiContext";
 import { initialUiState } from "../../store/contexts/UiContext/UiContextProvider";
 import { UserState } from "../../store/contexts/userContext/userContext";
@@ -123,6 +127,148 @@ describe("Given a useUser custom hook", () => {
       expect(uiDispatch).toHaveBeenCalledWith(
         showFeedbackActionCreator(expectedMessage)
       );
+    });
+  });
+
+  describe("When its method verifyUser is invoked and the response has status code 200", () => {
+    test("Then dispatch should be invoked with a loginUserAction", async () => {
+      const {
+        result: {
+          current: { verifyUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      const loginUserAction = loginUserActionCreator();
+
+      await verifyUser();
+
+      expect(userDispatch).toHaveBeenCalledWith(loginUserAction);
+    });
+  });
+
+  describe("When its method verifyUser is invoked and the response has status code 401", () => {
+    beforeEach(() => {
+      server.resetHandlers(...errorHandlers);
+    });
+
+    test("Then useNavigate should be invoked with path '/login'", async () => {
+      const loginPath = routerPaths.login;
+      const {
+        result: {
+          current: { verifyUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      await verifyUser();
+
+      expect(mockNavigate).toHaveBeenCalledWith(loginPath);
+    });
+
+    test("Then dispatch should be invoked with a logoutUserAction", async () => {
+      const {
+        result: {
+          current: { verifyUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      const logoutUserAction = logoutUserActionCreator();
+
+      await verifyUser();
+
+      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+    });
+  });
+
+  describe("When its method logoutUser is invoked", () => {
+    test("Then dispatch should be invoked with a logoutUserAction", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      const logoutUserAction = logoutUserActionCreator();
+
+      logoutUser();
+
+      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+    });
+
+    test("Then useNavigate should be invoked", async () => {
+      const {
+        result: {
+          current: { logoutUser },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      logoutUser();
+
+      expect(mockNavigate).toHaveBeenCalled();
     });
   });
 });
