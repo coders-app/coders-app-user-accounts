@@ -1,5 +1,12 @@
-import { LoginUserAction, LogoutUserAction, UserActionType } from "./types";
+import { userMock } from "../../../mocks/userMocks";
 import {
+  LoadUserDataAction,
+  LoginUserAction,
+  LogoutUserAction,
+  UserActionType,
+} from "./types";
+import {
+  loadUserDataActionCreator,
   loginUserActionCreator,
   logoutUserActionCreator,
 } from "./userActionCreators";
@@ -14,6 +21,21 @@ describe("Given a loginUserActionCreator function", () => {
       const loginUserAction = loginUserActionCreator();
 
       expect(loginUserAction).toStrictEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given a loadUserDataActionCreator", () => {
+  describe("When it is invoked with the user 'Luis'", () => {
+    test("Then it should return an action with type 'loadUserData' and a payload with the received user", () => {
+      const expectedAction: LoadUserDataAction = {
+        type: UserActionType.loadUserData,
+        payload: userMock,
+      };
+
+      const loadUserDataAction = loadUserDataActionCreator(userMock);
+
+      expect(loadUserDataAction).toStrictEqual(expectedAction);
     });
   });
 });
