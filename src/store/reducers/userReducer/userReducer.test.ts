@@ -1,5 +1,7 @@
+import { userMock } from "../../../mocks/userMocks";
 import { UserActionType } from "../../actions/userActions/types";
 import {
+  loadUserDataActionCreator,
   loginUserActionCreator,
   logoutUserActionCreator,
 } from "../../actions/userActions/userActionCreators";
@@ -9,6 +11,8 @@ import userReducer from "./userReducer";
 
 describe("Given a userReducer function", () => {
   const currentUserState: UserState = {
+    isAdmin: false,
+    name: "",
     isLogged: false,
   };
 
@@ -16,10 +20,27 @@ describe("Given a userReducer function", () => {
     test("Then it should return a new user state with isLogged value true", () => {
       const loginUserAction = loginUserActionCreator();
       const expectedUserState: UserState = {
+        ...currentUserState,
         isLogged: true,
       };
 
       const newUserState = userReducer(currentUserState, loginUserAction);
+
+      expect(newUserState).toStrictEqual(expectedUserState);
+    });
+  });
+
+  describe("When it's invoked with a current user state and a loadUserData action with 'Luis' in the payload", () => {
+    test("Then it should return a new user state with name value 'Luis'", () => {
+      const expectedUserState: UserState = {
+        ...currentUserState,
+        ...userMock,
+        isLogged: true,
+      };
+
+      const loadUserDataAction = loadUserDataActionCreator(userMock);
+
+      const newUserState = userReducer(currentUserState, loadUserDataAction);
 
       expect(newUserState).toStrictEqual(expectedUserState);
     });
