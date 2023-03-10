@@ -8,6 +8,8 @@ interface UserContextProviderProps {
 
 export const initialUserState: UserState = {
   isLogged: false,
+  isAdmin: false,
+  name: "",
 };
 
 const UserContextProvider = ({
