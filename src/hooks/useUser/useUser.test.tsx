@@ -2,11 +2,13 @@ import { act, renderHook } from "@testing-library/react";
 import * as router from "react-router";
 import { errorHandlers } from "../../mocks/handlers";
 import server from "../../mocks/server";
+import { userMock } from "../../mocks/userMocks";
 import routerPaths from "../../routers/routerPaths";
 import { UiAction } from "../../store/actions/uiActions/types";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import { UserAction } from "../../store/actions/userActions/types";
 import {
+  loadUserDataActionCreator,
   loginUserActionCreator,
   logoutUserActionCreator,
 } from "../../store/actions/userActions/userActionCreators";
@@ -42,6 +44,31 @@ const userCredentials: UserCredentials = {
 
 describe("Given a useUser custom hook", () => {
   describe("When its method getCookie is invoked with credentials 'admin@admin.com' as email and 'AdminAdmin' as password", () => {
+    test("Then useNavigate should be invoked", async () => {
+      const {
+        result: {
+          current: { getLoginCookie },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      await act(async () => getLoginCookie(userCredentials));
+
+      expect(mockNavigate).toHaveBeenCalled();
+    });
+
     test("Then dispatch should be invoked with a loginUserAction", async () => {
       const {
         result: {
@@ -67,31 +94,6 @@ describe("Given a useUser custom hook", () => {
       await act(async () => getLoginCookie(userCredentials));
 
       expect(userDispatch).toHaveBeenCalledWith(loginUserAction);
-    });
-
-    test("Then useNavigate should be invoked", async () => {
-      const {
-        result: {
-          current: { getLoginCookie },
-        },
-      } = renderHook(() => useUser(), {
-        wrapper({ children }) {
-          return (
-            <WrapperWithProviders
-              wrapperOptions={{
-                mockUiStore,
-                mockUserStore,
-              }}
-            >
-              {children}
-            </WrapperWithProviders>
-          );
-        },
-      });
-
-      await act(async () => getLoginCookie(userCredentials));
-
-      expect(mockNavigate).toHaveBeenCalled();
     });
   });
 
@@ -131,7 +133,7 @@ describe("Given a useUser custom hook", () => {
   });
 
   describe("When its method verifyUser is invoked and the response has status code 200", () => {
-    test("Then dispatch should be invoked with a loginUserAction", async () => {
+    test("Then dispatch should be invoked with a loadUserDataAction", async () => {
       const {
         result: {
           current: { verifyUser },
@@ -151,11 +153,11 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      const loginUserAction = loginUserActionCreator();
+      const loadUserDataAction = loadUserDataActionCreator(userMock);
 
-      await verifyUser();
+      await act(async () => verifyUser());
 
-      expect(userDispatch).toHaveBeenCalledWith(loginUserAction);
+      expect(userDispatch).toHaveBeenCalledWith(loadUserDataAction);
     });
   });
 
@@ -185,7 +187,7 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      await verifyUser();
+      await act(async () => verifyUser());
 
       expect(mockNavigate).toHaveBeenCalledWith(loginPath);
     });
@@ -212,7 +214,7 @@ describe("Given a useUser custom hook", () => {
 
       const logoutUserAction = logoutUserActionCreator();
 
-      await verifyUser();
+      await act(async () => verifyUser());
 
       expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
@@ -241,7 +243,7 @@ describe("Given a useUser custom hook", () => {
 
       const logoutUserAction = logoutUserActionCreator();
 
-      logoutUser();
+      await act(async () => logoutUser());
 
       expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
@@ -266,7 +268,7 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      logoutUser();
+      await act(async () => logoutUser());
 
       expect(mockNavigate).toHaveBeenCalled();
     });

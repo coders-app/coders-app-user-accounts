@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import { apiPaths } from "../constants/apiPaths/apiPaths";
+import { userMock } from "./userMocks";
 
 export const handlers = [
   rest.post(
@@ -11,7 +12,7 @@ export const handlers = [
   rest.get(
     `${apiPaths.root}${apiPaths.users.verify}`,
     async (req, res, ctx) => {
-      return res(ctx.status(200));
+      return res(ctx.status(200), ctx.json({ userPayload: userMock }));
     }
   ),
 ];
