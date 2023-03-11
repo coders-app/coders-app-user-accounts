@@ -3,11 +3,10 @@ import App from "./App";
 
 const mockVerifyUser = jest.fn();
 
-jest.mock("../../hooks/useUser/useUser", () => {
-  return () => ({
-    verifyUser: mockVerifyUser,
-  });
-});
+jest.mock("../../hooks/useUser/useUser", () => () => ({
+  ...jest.requireActual("../../hooks/useUser/useUser"),
+  verifyUser: mockVerifyUser,
+}));
 
 describe("Given an App component", () => {
   describe("When it's rendered", () => {
