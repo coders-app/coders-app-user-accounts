@@ -23,12 +23,12 @@ beforeEach(() => {
 });
 
 const currentUiState: UiState = initialUiState;
-const uiDispatch: React.Dispatch<UiAction> = jest.fn();
-const mockUiStore = { dispatch: uiDispatch, currentUiState };
+const mockUiDispatch: React.Dispatch<UiAction> = jest.fn();
+const mockUiStore = { dispatch: mockUiDispatch, currentUiState };
 
 const currentUserState: UserState = initialUserState;
-const userDispatch: React.Dispatch<UserAction> = jest.fn();
-const mockUserStore = { dispatch: userDispatch, currentUserState };
+const mockUserDispatch: React.Dispatch<UserAction> = jest.fn();
+const mockUserStore = { dispatch: mockUserDispatch, currentUserState };
 
 const mockNavigate = jest.fn();
 beforeEach(() => {
@@ -66,7 +66,7 @@ describe("Given a useUser custom hook", () => {
 
       await act(async () => getLoginCookie(userCredentials));
 
-      expect(userDispatch).toHaveBeenCalledWith(loginUserAction);
+      expect(mockUserDispatch).toHaveBeenCalledWith(loginUserAction);
     });
 
     test("Then useNavigate should be invoked", async () => {
@@ -124,7 +124,7 @@ describe("Given a useUser custom hook", () => {
 
       await act(async () => getLoginCookie(userCredentials));
 
-      expect(uiDispatch).toHaveBeenCalledWith(
+      expect(mockUiDispatch).toHaveBeenCalledWith(
         showFeedbackActionCreator(expectedMessage)
       );
     });
@@ -155,7 +155,7 @@ describe("Given a useUser custom hook", () => {
 
       await verifyUser();
 
-      expect(userDispatch).toHaveBeenCalledWith(loginUserAction);
+      expect(mockUserDispatch).toHaveBeenCalledWith(loginUserAction);
     });
   });
 
@@ -214,15 +214,23 @@ describe("Given a useUser custom hook", () => {
 
       await verifyUser();
 
-      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+      expect(mockUserDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
   });
 
-  describe("When its method logoutUser is invoked", () => {
+  describe("When its method getLogout is invoked and there is a user logged", () => {
+    const mockUserStateLogged: UserState = {
+      isLogged: true,
+    };
+
+    const mockUserStoreLogged = {
+      dispatch: mockUserDispatch,
+      currentUserState: mockUserStateLogged,
+    };
     test("Then dispatch should be invoked with a logoutUserAction", async () => {
       const {
         result: {
-          current: { logoutUser },
+          current: { getLogout },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -230,7 +238,7 @@ describe("Given a useUser custom hook", () => {
             <WrapperWithProviders
               wrapperOptions={{
                 mockUiStore,
-                mockUserStore,
+                mockUserStore: mockUserStoreLogged,
               }}
             >
               {children}
@@ -241,15 +249,47 @@ describe("Given a useUser custom hook", () => {
 
       const logoutUserAction = logoutUserActionCreator();
 
-      logoutUser();
+      await getLogout();
 
-      expect(userDispatch).toHaveBeenCalledWith(logoutUserAction);
+      expect(mockUserDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
 
-    test("Then useNavigate should be invoked", async () => {
+    test("Then useNavigate should be invoked with '/login'", async () => {
       const {
         result: {
-          current: { logoutUser },
+          current: { getLogout },
+        },
+      } = renderHook(() => useUser(), {
+        wrapper({ children }) {
+          return (
+            <WrapperWithProviders
+              wrapperOptions={{
+                mockUiStore,
+                mockUserStore: mockUserStoreLogged,
+              }}
+            >
+              {children}
+            </WrapperWithProviders>
+          );
+        },
+      });
+
+      await getLogout();
+
+      expect(mockNavigate).toHaveBeenCalledWith(routerPaths.login);
+    });
+  });
+
+  describe("When its method getLogout is invoked and there isn't a user logged", () => {
+    beforeEach(() => {
+      server.resetHandlers(...errorHandlers);
+    });
+    test("Then uiDispatch should be invoked with a showFeedbackAction and message 'Error on logout, try again later'", async () => {
+      const expectedMessage = "Error on logout, try again later";
+
+      const {
+        result: {
+          current: { getLogout },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -266,9 +306,11 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      logoutUser();
+      await getLogout();
 
-      expect(mockNavigate).toHaveBeenCalled();
+      expect(mockUiDispatch).toHaveBeenCalledWith(
+        showFeedbackActionCreator(expectedMessage)
+      );
     });
   });
 });
