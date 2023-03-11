@@ -2,9 +2,12 @@ import { screen } from "@testing-library/react";
 import routerRender from "../../testUtils/routersUtils/routerRender";
 
 const mockLogin = jest.fn();
+const mockVerifyUser = jest.fn();
 
 jest.mock("../../hooks/useUser/useUser", () => () => ({
+  ...jest.requireActual("../../hooks/useUser/useUser"),
   getLoginCookie: mockLogin,
+  verifyUser: mockVerifyUser,
 }));
 
 describe("Given the page LoginPage", () => {
