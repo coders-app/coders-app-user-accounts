@@ -23,7 +23,6 @@ const userReducer = (
       newUserState = {
         ...currentUserState,
         ...(action as LoadUserDataAction).payload,
-        isLogged: true,
       };
       break;
     case UserActionType.logoutUser:
