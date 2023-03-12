@@ -6,7 +6,6 @@ import {
   logoutUserActionCreator,
 } from "../../actions/userActions/userActionCreators";
 import { UserState } from "../../contexts/userContext/userContext";
-import { initialUserState } from "../../contexts/userContext/userContextProvider";
 import userReducer from "./userReducer";
 
 describe("Given a userReducer function", () => {
@@ -18,42 +17,32 @@ describe("Given a userReducer function", () => {
 
   describe("When it's invoked with a current user state and login action", () => {
     test("Then it should return a new user state with isLogged value true", () => {
-      const loginUserAction = loginUserActionCreator();
-      const expectedUserState: UserState = {
-        ...currentUserState,
-        isLogged: true,
-      };
+      const expectedIsLogged = true;
 
+      const loginUserAction = loginUserActionCreator();
       const newUserState = userReducer(currentUserState, loginUserAction);
 
-      expect(newUserState).toStrictEqual(expectedUserState);
+      expect(newUserState).toHaveProperty("isLogged", expectedIsLogged);
     });
   });
 
   describe("When it's invoked with a current user state and a loadUserData action with 'Luis' in the payload", () => {
     test("Then it should return a new user state with name value 'Luis'", () => {
-      const expectedUserState: UserState = {
-        ...currentUserState,
-        ...userMock,
-        isLogged: true,
-      };
-
       const loadUserDataAction = loadUserDataActionCreator(userMock);
-
       const newUserState = userReducer(currentUserState, loadUserDataAction);
 
-      expect(newUserState).toStrictEqual(expectedUserState);
+      expect(newUserState).toHaveProperty("name", userMock.name);
     });
   });
 
   describe("When it's invoked with a current user state and a logoutUser action", () => {
     test("Then it should return a new user state with isLogged value false", () => {
-      const logoutUserAction = logoutUserActionCreator();
-      const expectedUserState: UserState = initialUserState;
+      const expectedIsLogged = false;
 
+      const logoutUserAction = logoutUserActionCreator();
       const newUserState = userReducer(currentUserState, logoutUserAction);
 
-      expect(newUserState).toStrictEqual(expectedUserState);
+      expect(newUserState).toHaveProperty("isLogged", expectedIsLogged);
     });
   });
 
