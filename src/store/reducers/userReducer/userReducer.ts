@@ -1,5 +1,10 @@
-import { UserAction, UserActionType } from "../../actions/userActions/types";
+import {
+  LoadUserDataAction,
+  UserAction,
+  UserActionType,
+} from "../../actions/userActions/types";
 import { UserState } from "../../contexts/userContext/userContext";
+import { initialUserState } from "../../contexts/userContext/userContextProvider";
 
 const userReducer = (
   currentUserState: UserState,
@@ -14,11 +19,14 @@ const userReducer = (
         isLogged: true,
       };
       break;
-    case UserActionType.logoutUser:
+    case UserActionType.loadUserData:
       newUserState = {
         ...currentUserState,
-        isLogged: false,
+        ...(action as LoadUserDataAction).payload,
       };
+      break;
+    case UserActionType.logoutUser:
+      newUserState = initialUserState;
       break;
     default:
       newUserState = currentUserState;
