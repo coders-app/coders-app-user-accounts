@@ -53,7 +53,7 @@ const useUser = (): UseUserStructure => {
     }
   }, [dispatch, navigate]);
 
-  const getLogout = async () => {
+  const logoutUser = async () => {
     try {
       await axios.post(
         `${apiPaths.root}${apiPaths.users.logout}`,
@@ -75,7 +75,7 @@ const useUser = (): UseUserStructure => {
     }
   };
 
-  return { getLoginCookie, verifyUser, getLogout };
+  return { getLoginCookie, verifyUser, logoutUser };
 };
 
 export default useUser;

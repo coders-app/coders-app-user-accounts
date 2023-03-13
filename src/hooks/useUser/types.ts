@@ -8,5 +8,5 @@ export interface VerifyUserResponse {
 export interface UseUserStructure {
   getLoginCookie: (userCredentials: UserCredentials) => Promise<void>;
   verifyUser: () => Promise<void>;
-  getLogout: () => Promise<void>;
+  logoutUser: () => Promise<void>;
 }
