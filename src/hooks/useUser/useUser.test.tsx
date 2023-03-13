@@ -220,7 +220,7 @@ describe("Given a useUser custom hook", () => {
     });
   });
 
-  describe("When its method getLogout is invoked and there is a user logged", () => {
+  describe("When its method logoutUser is invoked and there is a user logged", () => {
     const mockUserStateLogged: UserState = {
       isLogged: true,
       isAdmin: true,
@@ -234,7 +234,7 @@ describe("Given a useUser custom hook", () => {
     test("Then dispatch should be invoked with a logoutUserAction", async () => {
       const {
         result: {
-          current: { getLogout },
+          current: { logoutUser },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -253,7 +253,7 @@ describe("Given a useUser custom hook", () => {
 
       const logoutUserAction = logoutUserActionCreator();
 
-      await getLogout();
+      await logoutUser();
 
       expect(mockUserDispatch).toHaveBeenCalledWith(logoutUserAction);
     });
@@ -261,7 +261,7 @@ describe("Given a useUser custom hook", () => {
     test("Then useNavigate should be invoked with '/login'", async () => {
       const {
         result: {
-          current: { getLogout },
+          current: { logoutUser },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -278,13 +278,13 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      await getLogout();
+      await logoutUser();
 
       expect(mockNavigate).toHaveBeenCalledWith(routerPaths.login);
     });
   });
 
-  describe("When its method getLogout is invoked and there isn't a user logged", () => {
+  describe("When its method logoutUser is invoked and there isn't a user logged", () => {
     beforeEach(() => {
       server.resetHandlers(...errorHandlers);
     });
@@ -293,7 +293,7 @@ describe("Given a useUser custom hook", () => {
 
       const {
         result: {
-          current: { getLogout },
+          current: { logoutUser },
         },
       } = renderHook(() => useUser(), {
         wrapper({ children }) {
@@ -310,7 +310,7 @@ describe("Given a useUser custom hook", () => {
         },
       });
 
-      await getLogout();
+      await logoutUser();
 
       expect(mockUiDispatch).toHaveBeenCalledWith(
         showFeedbackActionCreator(expectedMessage)
