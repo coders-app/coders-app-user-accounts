@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-*
+*,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -11,11 +11,12 @@ html {
   font-family: "Open Sans", sans-serif;
 }
 
-.root {
+body {
   font-size: 1.125rem;
+  margin: 0;
 }
 
-ul,li {
+ul, li {
   list-style: none;
   list-style-position: outside;
   margin-block-start: 0;
@@ -28,7 +29,6 @@ button {
   cursor: pointer;
 }
 
-
 input,
 button,
 textarea,
@@ -36,9 +36,7 @@ select {
   font: inherit;
 }
 
-body,
-p,
-span {
+p {
   margin: 0;
 }
 
@@ -52,9 +50,13 @@ h6 {
   font-family: "Montserrat", sans-serif;
 }
 
-a {
+a, a:visited {
+  color: ${(props) => props.theme.colors.brands.base};
   text-decoration: none;
-  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 `;
 

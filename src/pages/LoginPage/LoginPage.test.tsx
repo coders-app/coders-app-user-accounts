@@ -41,8 +41,8 @@ describe("Given the page LoginPage", () => {
       expect(button).toBeInTheDocument();
     });
 
-    test("Then it should show a link with text 'Reset password'", () => {
-      const linkData = { name: "Reset password" };
+    test("Then it should show a link with text 'Have you forgotten your password?'", () => {
+      const linkData = { name: "Have you forgotten your password?" };
 
       routerRender();
       const resetPasswordLink = screen.getByRole("link", linkData);
