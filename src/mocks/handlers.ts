@@ -15,6 +15,12 @@ export const handlers = [
       return res(ctx.status(200), ctx.json({ userPayload: userMock }));
     }
   ),
+  rest.post(
+    `${apiPaths.root}${apiPaths.users.logout}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(204));
+    }
+  ),
 ];
 
 export const errorHandlers = [
@@ -28,6 +34,12 @@ export const errorHandlers = [
     `${apiPaths.root}${apiPaths.users.verify}`,
     async (req, res, ctx) => {
       return res(ctx.status(401));
+    }
+  ),
+  rest.post(
+    `${apiPaths.root}${apiPaths.users.logout}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(500));
     }
   ),
 ];

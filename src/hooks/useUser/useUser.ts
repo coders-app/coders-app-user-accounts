@@ -53,12 +53,29 @@ const useUser = (): UseUserStructure => {
     }
   }, [dispatch, navigate]);
 
-  const logoutUser = () => {
-    dispatch(logoutUserActionCreator());
-    navigate(routerPaths.login);
+  const getLogout = async () => {
+    try {
+      await axios.post(
+        `${apiPaths.root}${apiPaths.users.logout}`,
+        {},
+        {
+          withCredentials: true,
+          validateStatus(status) {
+            return status === 204;
+          },
+        }
+      );
+
+      dispatch(logoutUserActionCreator());
+      navigate(routerPaths.login);
+    } catch {
+      const errorMessage = "Error on logout, try again later";
+
+      uiDispatch(showFeedbackActionCreator(errorMessage));
+    }
   };
 
-  return { getLoginCookie, verifyUser, logoutUser };
+  return { getLoginCookie, verifyUser, getLogout };
 };
 
 export default useUser;
