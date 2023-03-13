@@ -5,12 +5,12 @@ import LoginPageStyled from "./LoginPageStyled";
 
 const LoginPage = () => {
   return (
-    <LoginPageStyled>
+    <LoginPageStyled className="login">
       <h1>Login</h1>
       <LoginForm />
 
       <Link to={routerPaths.setPassword} className="login__link">
-        Reset password
+        Have you forgotten your password?
       </Link>
     </LoginPageStyled>
   );

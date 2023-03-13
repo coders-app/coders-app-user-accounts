@@ -5,13 +5,14 @@ import { apiPaths } from "../../constants/apiPaths/apiPaths";
 import routerPaths from "../../routers/routerPaths";
 import { showFeedbackActionCreator } from "../../store/actions/uiActions/uiActionCreators";
 import {
+  loadUserDataActionCreator,
   loginUserActionCreator,
   logoutUserActionCreator,
 } from "../../store/actions/userActions/userActionCreators";
 import { UiContext } from "../../store/contexts/UiContext/UiContext";
 import { UserContext } from "../../store/contexts/userContext/userContext";
 import { UserCredentials } from "../../types";
-import { UseUserStructure } from "../types";
+import { UseUserStructure, VerifyUserResponse } from "./types";
 
 const useUser = (): UseUserStructure => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const useUser = (): UseUserStructure => {
 
   const getLoginCookie = async (userCredentialsData: UserCredentials) => {
     try {
-      await axios.post<Record<string, string>>(
+      await axios.post(
         `${apiPaths.root}${apiPaths.users.login}`,
         userCredentialsData,
         {
@@ -41,13 +42,11 @@ const useUser = (): UseUserStructure => {
 
   const verifyUser = useCallback(async () => {
     try {
-      await axios.get(`${apiPaths.root}${apiPaths.users.verify}`, {
-        validateStatus(status) {
-          return status === 200;
-        },
-      });
+      const userData = await axios.get<VerifyUserResponse>(
+        `${apiPaths.root}${apiPaths.users.verify}`
+      );
 
-      dispatch(loginUserActionCreator());
+      dispatch(loadUserDataActionCreator(userData.data.userPayload));
     } catch {
       dispatch(logoutUserActionCreator());
       navigate(routerPaths.login);
@@ -56,7 +55,7 @@ const useUser = (): UseUserStructure => {
 
   const getLogout = async () => {
     try {
-      await axios.post<Record<string, string>>(
+      await axios.post(
         `${apiPaths.root}${apiPaths.users.logout}`,
         {},
         {
