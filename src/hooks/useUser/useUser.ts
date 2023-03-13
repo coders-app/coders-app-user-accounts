@@ -21,7 +21,7 @@ const useUser = (): UseUserStructure => {
 
   const getLoginCookie = async (userCredentialsData: UserCredentials) => {
     try {
-      await axios.post<Record<string, string>>(
+      await axios.post(
         `${apiPaths.root}${apiPaths.users.login}`,
         userCredentialsData,
         {
