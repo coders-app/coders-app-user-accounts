@@ -43,7 +43,8 @@ const useUser = (): UseUserStructure => {
   const verifyUser = useCallback(async () => {
     try {
       const userData = await axios.get<VerifyUserResponse>(
-        `${apiPaths.root}${apiPaths.users.verify}`
+        `${apiPaths.root}${apiPaths.users.verify}`,
+        { withCredentials: true }
       );
 
       dispatch(loadUserDataActionCreator(userData.data.userPayload));
